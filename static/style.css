@@ -1,0 +1,44 @@
+body { background-color: #121212; }
+.card { border: none; }
+.navbar-brand { color: #380DD3 !important; font-weight: bold; }
+.btn-success { background-color: #380DD3; border-color: #380DD3; }
+.btn-success:hover { background-color: #320db6; border-color: #320db6; }
+.btn-danger { background-color: #e02424; border-color: #e02424; }
+.btn-danger:hover { background-color: #ff4c4c; border-color: #ff4c4c; }
+.collections-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.collection-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f9f9f9;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.collection-item a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.collection-item form {
+  margin: 0;
+}
+
+.collection-item button {
+  background: none;
+  border: none;
+  color: red;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.collection-item button:hover {
+  color: darkred;
+}

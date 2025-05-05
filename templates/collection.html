@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}{{ collection_name }} – Sortify{% endblock %}
+
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>{{ collection_name }}</h2>
+    <a href="{{ url_for('collections_view') }}" class="btn btn-secondary btn-sm">← Back to Collections</a>
+  </div>
+
+  <ul class="list-group">
+    {% for song, artist in songs %}
+    <li class="list-group-item bg-secondary d-flex justify-content-between align-items-center">
+      <span>{{ song }} by {{ artist }}</span>
+      <button
+        class="btn btn-danger btn-sm remove-btn"
+        data-collection="{{ collection_name }}"
+        data-song="{{ song }}"
+        data-artist="{{ artist }}"
+      >
+        Remove
+      </button>
+    </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Attach handler to all remove buttons
+document.querySelectorAll('.remove-btn').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const collection = btn.getAttribute('data-collection');
+    const song       = btn.getAttribute('data-song');
+    const artist     = btn.getAttribute('data-artist');
+    if (!confirm(`Delete "${song}" from ${collection}?`)) return;
+    
+    const body = new URLSearchParams({ collection, song, artist });
+    const res  = await fetch("{{ url_for('remove_from_collection') }}", {
+      method: 'POST',
+      headers: { 'Content-Type':'application/x-www-form-urlencoded' },
+      body
+    });
+    const json = await res.json();
+    
+    if (json.success) {
+      // Remove the <li> from the DOM
+      btn.closest('li').remove();
+    } else {
+      alert('Error: ' + json.message);
+    }
+  });
+});
+</script>
+{% endblock %}

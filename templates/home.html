@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Home – Sortify{% endblock %}
+{% block content %}
+  <div class="text-center">
+    <h1>Welcome to <span style="color: #380DD3">Sortify</span></h1>
+    {% if not session.username %}
+      <a class="btn btn-success" href="{{ url_for('login') }}">Log in with Spotify</a>
+      <br>
+      <br>
+      <b>Log in with Spotify to track and organize your music experience</b2>
+    {% endif %}
+    <hr class="my-4">
+    <form class="d-flex justify-content-center" action="{{ url_for('search') }}" method="get">
+      <input class="form-control w-50 me-2" name="q" placeholder="Search for a song" required>
+      <button class="btn btn-primary">Search</button>
+    </form>
+    <br>
+    <br>
+    <ul>
+      <li><strong>Log in with Spotify</strong> – Authenticate securely to access your recently played tracks.</li>
+      <li><strong>View Recently Played</strong> – See your last 50 played songs and add them to any collection.</li>
+      <li><strong>Search for Songs</strong> – Look up songs using Spotify search and save them into collections.</li>
+      <li><strong>Create Collections</strong> – Make custom-named collections to organize your music however you like.</li>
+      <li><strong>View Collections</strong> – See your saved collections and all the tracks inside them.</li>
+      <li><strong>Remove Songs</strong> – Easily remove tracks from any collection.</li>
+      <li><strong>Delete Collections</strong> – If you no longer need a collection, delete it entirely.</li>
+    </ul>
+  </div>
+{% endblock %}

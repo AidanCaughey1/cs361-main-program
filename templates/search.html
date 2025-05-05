@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Search – Sortify{% endblock %}
+{% block content %}
+  <h2>Search Results for "{{ query }}"</h2>
+  <div class="row gy-3">
+    {% for tr in tracks %}
+    <div class="col-md-6">
+      <div class="card bg-secondary text-white">
+        <div class="card-body d-flex justify-content-between align-items-center">
+          <div>
+            <strong>{{ tr.name }}</strong><br>
+            <small>{{ tr.artists[0].name }}</small>
+          </div>
+          <form class="add-form d-flex" action="{{ url_for('add_to_collection') }}" method="post">
+            <input type="hidden" name="song"   value="{{ tr.name }}">
+            <input type="hidden" name="artist" value="{{ tr.artists[0].name }}">
+            <select name="collection" class="form-select me-2">
+              <option disabled selected>Add to…</option>
+              {% for c in collections %}
+              <option>{{ c }}</option>
+              {% endfor %}
+            </select>
+            <button class="btn btn-success btn-sm">+</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+{% endblock %}
+{% block scripts %}
+<script>
+document.querySelectorAll('.add-form').forEach(f=>{
+  f.addEventListener('submit',async e=>{
+    e.preventDefault();
+    const data=new FormData(f);
+    const res=await fetch(f.action,{method:'POST',body:data});
+    const j=await res.json();
+    alert(j.success?j.message:'Error: '+j.message);
+  })
+});
+</script>
+{% endblock %}
