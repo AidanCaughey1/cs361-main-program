@@ -4,12 +4,15 @@ from flask import (
 )
 import requests, os, urllib.parse, sqlite3
 
+from dotenv import load_dotenv
+load_dotenv(dotenv_path='secret.env')
+
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
-CLIENT_ID     = '47bed45cb9644ea7a98c53f43808139b'
-CLIENT_SECRET = '632bd18d36cf45cca39262f063aafaf2'
+CLIENT_ID = os.getenv('CLIENT_ID')
+CLIENT_SECRET = os.getenv('CLIENT_SECRET')
 REDIRECT_URI  = 'http://127.0.0.1:5000/callback'
 SCOPE         = 'user-read-recently-played user-read-private'
 DB_PATH       = 'collections.db'
